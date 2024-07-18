@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import Menu from '../components/Menu.vue'
+import {ref} from 'vue'
+import {ArrowLeftBold, ArrowRightBold} from '@element-plus/icons-vue'
+
+const isCollapsed = ref(false)
 </script>
 
 <template>
@@ -24,8 +28,10 @@ import Menu from '../components/Menu.vue'
       </el-dropdown>
     </el-header>
     <el-container>
-      <el-aside width="250px">
-        <Menu/>
+      <el-aside width="auto" class="relative">
+        <Menu :collapse="isCollapsed"/>
+        <el-button :icon="isCollapsed? ArrowRightBold:ArrowLeftBold" class="absolute bottom-0 w-full h-12 border-r-0"
+                   @click="isCollapsed=!isCollapsed"></el-button>
       </el-aside>
       <el-main>
         <router-view></router-view>
@@ -34,3 +40,9 @@ import Menu from '../components/Menu.vue'
   </el-container>
 
 </template>
+
+<style>
+.el-aside {
+  overflow: visible !important;
+}
+</style>

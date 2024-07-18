@@ -13,7 +13,7 @@ export const routes = [
     component: () => import('../layouts/Layout.vue'),
     children: [
       {
-        path: 'dashboard',
+        path: '/dashboard',
         name: 'Dashboard',
         meta: {
           title: '控制台',
@@ -22,7 +22,7 @@ export const routes = [
         component: () => import('../pages/Dashboard/Dashboard.vue')
       },
       {
-        path: 'post',
+        path: '/post',
         name: 'Post',
         meta: {
           title: '文章管理',
@@ -49,7 +49,7 @@ export const routes = [
         ]
       },
       {
-        path: 'tag',
+        path: '/tag',
         name: 'Tag',
         meta: {
           title: '标签管理',
@@ -58,7 +58,7 @@ export const routes = [
         component: () => import('../pages/Tag/Tag.vue')
       },
       {
-        path: 'user',
+        path: '/user',
         name: 'User',
         meta: {
           title: '用户管理',

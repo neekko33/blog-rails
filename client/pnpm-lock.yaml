@@ -20,6 +20,9 @@ importers:
       pinia:
         specifier: ^2.1.7
         version: 2.1.7(typescript@5.5.3)(vue@3.4.31(typescript@5.5.3))
+      store:
+        specifier: link:@/store
+        version: link:@/store
       vue:
         specifier: ^3.4.31
         version: 3.4.31(typescript@5.5.3)
