@@ -34,3 +34,6 @@
 
 # front-end node_modules
 /client/node_modules
+
+# Ignore dababase config for developement
+/config/database.yml
