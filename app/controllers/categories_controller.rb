@@ -5,7 +5,7 @@ class CategoriesController < ApplicationController
   def index
     @categories = Category.all
 
-    render json: @categories
+    render json: {code: 200, data: @categories, message: 'success'}
   end
 
   # GET /categories/1

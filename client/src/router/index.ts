@@ -3,7 +3,7 @@ import {
   DataAnalysis,
   Collection,
   User,
-  PriceTag
+  PriceTag, Filter
 } from '@element-plus/icons-vue'
 
 export const routes = [
@@ -47,6 +47,15 @@ export const routes = [
             component: () => import('../pages/Post/PostEdit.vue')
           }
         ]
+      },
+      {
+        path: '/category',
+        name: 'Category',
+        meta: {
+          title: '分类管理',
+          icon: Filter
+        },
+        component: () => import('../pages/Category/Category.vue'),
       },
       {
         path: '/tag',

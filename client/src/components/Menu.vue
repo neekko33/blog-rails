@@ -6,7 +6,7 @@ import {ArrowLeftBold, ArrowRightBold} from '@element-plus/icons-vue'
 
 const route = useRoute()
 const router = useRouter()
-const {collapse} = defineProps<{ collapse: boolean }>()
+const {collapse, switchCollapse} = defineProps<{ collapse: boolean, switchCollapse: () => void }>()
 const routeName = ref(route.name)
 
 const onSelect = (routeName) => {
@@ -44,5 +44,11 @@ const onSelect = (routeName) => {
         </el-menu-item>
       </el-sub-menu>
     </template>
+    <button class="absolute bottom-0 w-full h-12 border-t hover:bg-blue-50" @click="switchCollapse">
+      <el-icon>
+        <ArrowRightBold v-if="collapse"/>
+        <ArrowLeftBold v-else/>
+      </el-icon>
+    </button>
   </el-menu>
 </template>

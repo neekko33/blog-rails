@@ -1,9 +1,10 @@
 import service from './service'
-import {AxiosResponseData, Post} from '../index'
+import { AxiosResponseData, Post } from '../index'
 
-export const getPosts = (pageNum?: number, pageSize?: number) => {
-  const url = 'posts' + (pageNum && pageSize) ? `?pageNum=${pageNum}&pageSize=${pageSize}` : ''
-  return service.get<any, AxiosResponseData<{ data: Post[], count: number }>>(url)
+export const getPosts = (pageNum: number = 1, pageSize: number = 10) => {
+  return service.get<any, AxiosResponseData<{ data: Post[]; count: number }>>(
+    `posts?pageNum=${pageNum}&pageSize=${pageSize}`
+  )
 }
 
 export const getPost = (id: number) => {
@@ -19,7 +20,9 @@ export const updatePost = (id: string, data: Post) => {
 }
 
 export const publishPost = (id: string, isPublished: boolean) => {
-  return service.post<any, AxiosResponseData<null>>('posts/' + id, {published: isPublished})
+  return service.post<any, AxiosResponseData<null>>('posts/' + id, {
+    published: isPublished
+  })
 }
 
 export const deletePost = (id: string) => {

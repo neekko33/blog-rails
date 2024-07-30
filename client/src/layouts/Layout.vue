@@ -1,9 +1,19 @@
 <script setup lang="ts">
 import Menu from '../components/Menu.vue'
-import {ref} from 'vue'
-import {ArrowLeftBold, ArrowRightBold} from '@element-plus/icons-vue'
+import {ArrowRight} from '@element-plus/icons-vue'
+import {ref, watch} from 'vue'
+import {useRoute} from 'vue-router'
 
+const route = useRoute()
 const isCollapsed = ref(false)
+
+watch(route.fullPath,() => {
+  console.log(route.matched)
+})
+
+const switchCollapse = () => {
+  isCollapsed.value = !isCollapsed.value
+}
 </script>
 
 <template>
@@ -14,8 +24,8 @@ const isCollapsed = ref(false)
              alt="logo"/>
       </div>
       <el-dropdown trigger="click">
-        <div class="cursor-pointer hover:bg-gray-100 rounded-md h-5/6 flex items-center justify-center px-3">
-          <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"/>
+        <div class="cursor-pointer hover:bg-gray-100 rounded-md h-5/6 flex items-center justify-center p-3">
+          <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" size="small" />
           <span class="font-bold pl-3">Neekko33</span>
         </div>
         <template #dropdown>
@@ -28,12 +38,14 @@ const isCollapsed = ref(false)
       </el-dropdown>
     </el-header>
     <el-container>
-      <el-aside width="auto" class="relative">
-        <Menu :collapse="isCollapsed"/>
-        <el-button :icon="isCollapsed? ArrowRightBold:ArrowLeftBold" class="absolute bottom-0 w-full h-12 border-r-0"
-                   @click="isCollapsed=!isCollapsed"></el-button>
+      <el-aside width="auto" class="border-r">
+        <Menu :collapse="isCollapsed" :switch-collapse="switchCollapse"/>
       </el-aside>
-      <el-main>
+      <el-main class="bg-gray-50">
+        <el-breadcrumb :separator-icon="ArrowRight" class="mb-5">
+          <el-breadcrumb-item :to="{ path: '/' }">主页</el-breadcrumb-item>
+          <el-breadcrumb-item>promotion management</el-breadcrumb-item>
+        </el-breadcrumb>
         <router-view></router-view>
       </el-main>
     </el-container>

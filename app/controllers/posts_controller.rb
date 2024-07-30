@@ -3,9 +3,15 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
-    @posts = Post.all
+    page_num = params[:pageNum].to_i
+    page_size = params[:pageSize].to_i
+    count = Post.count
+    @posts = Post.joins(:user, :category)
+                 .select("posts.*, users.name as author, categories.name as category_name")
+                 .offset((page_num - 1) * page_size).take(page_size)
 
-    render json: @posts
+    result = { code: 200, data: { data: @posts, count: count }, message: 'success' }
+    render json: result
   end
 
   # GET /posts/1
@@ -15,12 +21,17 @@ class PostsController < ApplicationController
 
   # POST /posts
   def create
-    @post = Post.new(post_params)
-
-    if @post.save
-      render json: @post, status: :created, location: @post
+    user = User.find(post_params[:user_id])
+    category = Category.find(post_params[:category_id])
+    if user && category
+      @post = user.posts.new(post_params)
+      if @post.save
+        render json: { code: 200, data: @post, message: "success" }, status: :created, location: @post
+      else
+        render json: { code: 200, message: @post.errors }, status: :unprocessable_entity
+      end
     else
-      render json: @post.errors, status: :unprocessable_entity
+      render json: { code: 200, message: "can't find user or category" }
     end
   end
 
@@ -39,13 +50,14 @@ class PostsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_post
-      @post = Post.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def post_params
-      params.require(:post).permit(:title, :content)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_post
+    @post = Post.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def post_params
+    params.require(:post).permit(:title, :content, :user_id, :category_id)
+  end
 end

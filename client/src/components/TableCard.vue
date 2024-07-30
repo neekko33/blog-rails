@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {Plus, Refresh} from '@element-plus/icons-vue'
+import Card from './Card.vue'
 
 const {title, onRefresh, onAdd} = defineProps<{
   title: string,
@@ -10,7 +11,7 @@ const {title, onRefresh, onAdd} = defineProps<{
 </script>
 
 <template>
-  <el-card>
+  <Card>
     <div class='flex justify-between items-center pb-5 '>
       <div class='text-xl'>{{ title }}</div>
       <div class='flex'>
@@ -33,8 +34,10 @@ const {title, onRefresh, onAdd} = defineProps<{
         </el-space>
       </div>
     </div>
-    <slot></slot>
-  </el-card>
+    <div class="mt-5">
+      <slot></slot>
+    </div>
+  </Card>
 </template>
 
 <style scoped>
